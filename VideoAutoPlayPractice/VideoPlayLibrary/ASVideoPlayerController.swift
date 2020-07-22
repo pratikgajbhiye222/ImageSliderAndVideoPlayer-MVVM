@@ -20,6 +20,11 @@ protocol ASAutoPlayVideoLayerContainer {
 }
 
 class ASVideoPlayerController: NSObject, NSCacheDelegate {
+    var shouldPlay : Bool = false {
+        didSet{
+            self.currentVideoContainer()?.shouldPlay = shouldPlay
+        }
+    }
     var minimumLayerHeightToPlay: CGFloat = 60
     // Mute unmute video
     var mute = false
@@ -151,7 +156,7 @@ class ASVideoPlayerController: NSObject, NSCacheDelegate {
                 return
         }
         if let currentItem = currentPlayer.currentItem, currentItem == playerItem {
-            currentPlayer.seek(to: kCMTimeZero)
+            currentPlayer.seek(to: CMTime.zero)
             currentPlayer.play()
         }
     }
@@ -178,6 +183,7 @@ class ASVideoPlayerController: NSObject, NSCacheDelegate {
             self.observingURLs[url] = true
         }
     }
+    /////........////////........///////
     
     private func removeObserverFor(url: String) {
         if let videoContainer = self.videoCache.object(forKey: url as NSString) {
@@ -238,6 +244,25 @@ class ASVideoPlayerController: NSObject, NSCacheDelegate {
         }
     }
     
+    
+    //Remove player
+    
+    func removePlayer(tableView: UITableView){
+        let visisbleCells = tableView.visibleCells
+        var maxHeight: CGFloat = 0.0
+        for cellView in visisbleCells {
+            guard let containerCell = cellView as? ASAutoPlayVideoLayerContainer,
+                let videoCellURL = containerCell.videoURL else {
+                    continue
+            }
+            let height = containerCell.visibleVideoHeight()
+            if maxHeight < height {
+                maxHeight = height
+            }
+            pauseRemoveLayer(layer: containerCell.videoLayer, url: videoCellURL, layerHeight: height)
+        }
+    }
+    
     // Play video only when current videourl's player is ready to play
     override func observeValue(forKeyPath keyPath: String?, of object: Any?,
                                change: [NSKeyValueChangeKey: Any]?,
@@ -252,9 +277,9 @@ class ASVideoPlayerController: NSObject, NSCacheDelegate {
              Handle `NSNull` value for `NSKeyValueChangeNewKey`, i.e. when
              `player.currentItem` is nil.
              */
-            let newStatus: AVPlayerItemStatus
+            let newStatus: AVPlayerItem.Status
             if let newStatusAsNumber = change?[NSKeyValueChangeKey.newKey] as? NSNumber {
-                newStatus = AVPlayerItemStatus(rawValue: newStatusAsNumber.intValue)!
+                newStatus = AVPlayerItem.Status(rawValue: newStatusAsNumber.intValue)!
                 if newStatus == .readyToPlay {
                     guard let item = object as? AVPlayerItem,
                         let currentItem = currentVideoContainer()?.player.currentItem else {

@@ -32,7 +32,7 @@ class MediaDetailsViewModelFeedItem: MediaDetailsViewModelItems {
         return mediaDetailsList.count
     }
     var mediaDetailsList: [MediaDetails]
-    init(mediaDetailsList: [MediaDetails]) {
+    init(mediaDetailsList: [MediaDetails] ) {
         self.mediaDetailsList = mediaDetailsList
     }
 }
@@ -46,7 +46,6 @@ class MediaDetailsViewModel : NSObject{
             let mediaDetailslist = MediaDetailsModel(data: data) else {
                 return
         }
-        
 
         let media =  mediaDetailslist.mediaDetails
         if !media.isEmpty {
@@ -74,13 +73,31 @@ extension MediaDetailsViewModel: UITableViewDataSource ,UITableViewDelegate {
         case .mediaList:
             if let item = item as? MediaDetailsViewModelFeedItem ,let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailsTableViewCell.identifier, for: indexPath) as? MediaDetailsTableViewCell {
                 cell.item = item.mediaDetailsList[indexPath.row]
+                
                 return cell
             }
         }
         return UITableViewCell()
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          tableView.deselectRow(at: indexPath, animated: true)
      }
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let videoCell = cell as? ASAutoPlayVideoLayerContainer, let _ = videoCell.videoURL {
+            ASVideoPlayerController.sharedVideoPlayer.removeLayerFor(cell: videoCell)
+        }
+    }
+    
+}
+
+public func dataFromFile(_ filename: String) -> Data? {
+    @objc class TestClass: NSObject { }
+    let bundle = Bundle(for: TestClass.self)
+    if let path = bundle.path(forResource: filename, ofType: "json") {
+        return (try? Data(contentsOf: URL(fileURLWithPath: path)))
+    }
+    return nil
+    
 }

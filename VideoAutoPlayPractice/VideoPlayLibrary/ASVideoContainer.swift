@@ -22,6 +22,15 @@ class ASVideoContainer {
             }
         }
     }
+    var shouldPlay : Bool = false {
+        didSet{
+            if shouldPlay {
+                player.play()
+            } else {
+                player.pause()
+            }
+        }
+    }
     
     let player: AVPlayer
     let playerItem: AVPlayerItem

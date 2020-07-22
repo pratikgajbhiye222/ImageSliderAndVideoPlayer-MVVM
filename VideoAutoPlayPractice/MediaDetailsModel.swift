@@ -7,7 +7,10 @@
 //
 
 import Foundation
-class MediaDetailsModel: Encodable{
+import UIKit
+import ImageSlideshow
+import SDWebImage
+class MediaDetailsModel{
     
     
 //    var coach = [Coach]()
@@ -36,7 +39,8 @@ class MediaDetails: Encodable {
     var fullName : String?
     var academyName : String?
     var pictureUrl: String?
-    var feedImage: String?
+    var feedImage = [FeedImages]()
+    var videoURL: String?
     var hashtag: String?
     var sessionName: String?
     var sessionDetails: String?
@@ -44,13 +48,22 @@ class MediaDetails: Encodable {
         self.fullName = json["fullName"] as? String
         self.academyName = json["academyName"] as? String
         self.pictureUrl = json["pictureUrl"] as? String
-        self.feedImage = json["feedImage"] as? String
+        self.videoURL = json["videoUrl"] as? String
         self.hashtag = json["hashtag"] as? String
         self.sessionName = json["sessionName"] as? String
         self.sessionDetails = json["sessionDetails"] as? String
         
+        if let feedImages = json["feedImage"] as? [[String: Any]]{
+            self.feedImage = feedImages.map{ FeedImages(json: $0)}
+        }
     }
+}
 
+class FeedImages: Encodable {
+    var images: String?
+     init(json:[String: Any]) {
+         self.images = json["images"] as? String
+    }
 }
 
 
