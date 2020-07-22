@@ -1,0 +1,25 @@
+{
+  "data": {
+    "id": 1,
+    "academyName": "Worrrier Academy",
+    "pictureUrl": "tom",
+    "contactNo": "tomSawyer@gmail.com",
+    "location": "aafdfdfsdfsdfsd",
+    "about": "this is about academy",
+    "services": "Yoga hall , swimming pool , play ground",
+    "currentRunningProgram": [
+      {
+        "programName": "Cricket program"
+      },
+      {
+        "programName": "Cricket program"
+      },
+      {
+        "programName": "Cricket program"
+      }
+    ],
+    "upcomingProgram": "upcoming Program list ,upcoming Program list,upcoming Program list "
+  },
+  "error": 0,
+  "message": "Success"
+}
