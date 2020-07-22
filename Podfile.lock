@@ -1,0 +1,33 @@
+PODS:
+  - ImageSlideshow/Core (1.9.1)
+  - ImageSlideshow/SDWebImage (1.9.1):
+    - ImageSlideshow/Core
+    - SDWebImage (>= 3.7)
+  - MBCircularProgressBar (0.3.5)
+  - Parchment (2.4.0)
+  - SDWebImage (5.8.4):
+    - SDWebImage/Core (= 5.8.4)
+  - SDWebImage/Core (5.8.4)
+
+DEPENDENCIES:
+  - ImageSlideshow/SDWebImage (~> 1.9.1)
+  - MBCircularProgressBar
+  - Parchment
+  - SDWebImage (~> 5.0)
+
+SPEC REPOS:
+  trunk:
+    - ImageSlideshow
+    - MBCircularProgressBar
+    - Parchment
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  ImageSlideshow: 67184be896a28472bd3b906c33ce4e0734aa3d22
+  MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
+  Parchment: 002785473861582385db5c6725165353c500198e
+  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
+
+PODFILE CHECKSUM: bdca90640ebbe3c16f710f2546324132feaa508b
+
+COCOAPODS: 1.8.4

@@ -1,0 +1,6 @@
+framework module Pods_VideoAutoPlayPractice {
+  umbrella header "Pods-VideoAutoPlayPractice-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-VideoAutoPlayPractice/Pods-VideoAutoPlayPractice-frameworks.sh
+${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework
+${BUILT_PRODUCTS_DIR}/MBCircularProgressBar/MBCircularProgressBar.framework
+${BUILT_PRODUCTS_DIR}/Parchment/Parchment.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
