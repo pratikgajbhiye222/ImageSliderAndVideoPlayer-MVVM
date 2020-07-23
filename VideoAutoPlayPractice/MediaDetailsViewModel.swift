@@ -56,7 +56,7 @@ class MediaDetailsViewModel : NSObject{
 }
 
 
-extension MediaDetailsViewModel: UITableViewDataSource ,UITableViewDelegate {
+extension MediaDetailsViewModel: UITableViewDataSource , UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return items.count
@@ -68,29 +68,48 @@ extension MediaDetailsViewModel: UITableViewDataSource ,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let vc : MediaViewController = MediaViewController()
         let item = items[indexPath.section]
         switch item.type {
         case .mediaList:
             if let item = item as? MediaDetailsViewModelFeedItem ,let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailsTableViewCell.identifier, for: indexPath) as? MediaDetailsTableViewCell {
                 cell.item = item.mediaDetailsList[indexPath.row]
+                cell.imageDataUrl.removeAll()
+                cell.bookMarkButton.tag = indexPath.row
+                cell.tapBlock = {
+                    print(indexPath.row)
+                    self.didTappedOnBookMarkButton(cell.bookMarkButton, tag: cell.bookMarkButton.tag)
+                }
+                let index = IndexPath(item: 0, section: 0)
+                tableView.reloadRows(at: [index], with: .automatic)
                 
+         //       cell.cellDelegate = vc.self
+               
                 return cell
             }
         }
         return UITableViewCell()
     }
+    @objc func didTappedOnBookMarkButton(_ button: UIButton , tag : UIButton.tag){
+        tag(row: )
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         tableView.deselectRow(at: indexPath, animated: true)
-     }
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let videoCell = cell as? ASAutoPlayVideoLayerContainer, let _ = videoCell.videoURL {
-            ASVideoPlayerController.sharedVideoPlayer.removeLayerFor(cell: videoCell)
+        if button.isSelected {
+            button.tintColor = UIColor.blue
+        } else {
+            button.tintColor = UIColor.red
         }
+        button.isSelected.toggle()
     }
     
+   
+    
+    
+    
 }
+
+
+
+
 
 public func dataFromFile(_ filename: String) -> Data? {
     @objc class TestClass: NSObject { }
@@ -101,3 +120,4 @@ public func dataFromFile(_ filename: String) -> Data? {
     return nil
     
 }
+

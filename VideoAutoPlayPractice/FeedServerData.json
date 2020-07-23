@@ -57,20 +57,8 @@
          "academyName": "Warrior Sports Academy",
          "pictureUrl": "portraitCoach2",
          "feedImage": [{
-            "images":"https://homepages.cae.wisc.edu/~ece533/images/girl.png"
-          },
-          {
-            "images":"https://i.pinimg.com/564x/ba/a3/07/baa307a7de3030f0073c56fa95ab2a3c.jpg"
-          },
-          {
-            "images":"https://homepages.cae.wisc.edu/~ece533/images/girl.png"
-          },
-          {
-            "images":"https://homepages.cae.wisc.edu/~ece533/images/girl.png"
-          },
-          {
-            "images":"https://homepages.cae.wisc.edu/~ece533/images/girl.png"
-          }
+           "images":"https://i.pinimg.com/564x/ba/a3/07/baa307a7de3030f0073c56fa95ab2a3c.jpg"
+         }
           ],
           "videoUrl":null,
          "hashtag": "",

@@ -11,10 +11,19 @@ import AVFoundation
 import ImageSlideshow
 import SDWebImage
 
+//protocol MediaDetailsTableViewCellDelegate : AnyObject{
+//    func didTappedOnBookMark(title: String)
+//}
+
+
 class MediaDetailsTableViewCell: UITableViewCell , ASAutoPlayVideoLayerContainer{
     
     var imageDataUrl = [SDWebImageSource]()
+    
+    var tapBlock : (()->Void)? = nil
+    
     weak var delegate: ImageSlideshowDelegate?
+//    weak var cellDelegate : MediaDetailsTableViewCellDelegate?
     @IBOutlet weak var slideshow: ImageSlideshow!
     
     @IBOutlet weak var fullNameOnFeed : UILabel!
@@ -25,7 +34,19 @@ class MediaDetailsTableViewCell: UITableViewCell , ASAutoPlayVideoLayerContainer
     @IBOutlet weak var sessionNameOnFeed : UILabel!
     @IBOutlet weak var sessionDetailsOnFeed : UILabel!
     
+    
+    @IBOutlet weak var bookMarkButton : UIButton!
+    
     var playerController: ASVideoPlayerController? = nil
+    
+//    override var isSelected: Bool {
+//    didSet {
+//        // custom selected behavior
+//        bookMarkButton.isSelected = isSelected
+//        bookMarkButton.tintColor = (isSelected ? UIColor.red : UIColor.blue)
+//       }
+//    }
+    
     var videoLayer: AVPlayerLayer = AVPlayerLayer()
     var pageIndex: Int = 0
     var videoURL: String? {
@@ -97,6 +118,10 @@ class MediaDetailsTableViewCell: UITableViewCell , ASAutoPlayVideoLayerContainer
         }
     }
     
+    @IBAction func didTappedOnBookMark(){
+//        cellDelegate?.didTappedOnBookMark(title : item?.academyName ?? "")
+        tapBlock?()
+    }
     
     
     
@@ -128,17 +153,21 @@ class MediaDetailsTableViewCell: UITableViewCell , ASAutoPlayVideoLayerContainer
         // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource
         
         
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(MediaDetailsTableViewCell.didTap))
-        slideshow.addGestureRecognizer(recognizer)
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(MediaDetailsTableViewCell.didTap(sender:)))
+        singleTap.numberOfTapsRequired = 1
+        slideshow.addGestureRecognizer(singleTap)
+    
         
     }
-    
-
-    
-    @objc func didTap(){
+   
+    @objc func didTap(sender: AnyObject?){
         print("did Tap")
         ASVideoPlayerController.sharedVideoPlayer.shouldPlay.toggle()
     }
+    
+    
+   
+    
     
     func configureCell(imageUrl: ImageSlideshow?,
                        videoUrl: String?) {
@@ -157,7 +186,7 @@ class MediaDetailsTableViewCell: UITableViewCell , ASAutoPlayVideoLayerContainer
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        slideshow.zoomEnabled = true
+        slideshow.zoomEnabled = false
         slideshow.currentPageChanged = nil
     }
     override func layoutSubviews() {
@@ -191,7 +220,7 @@ class MediaDetailsTableViewCell: UITableViewCell , ASAutoPlayVideoLayerContainer
 
 extension MediaDetailsTableViewCell: ImageSlideshowDelegate {
     func imageSlideshow(_ imageSlideshow: ImageSlideshow, didChangeCurrentPageTo page: Int) {
-        print("current page:", page)
+      //  print("current page:", page)
     }
 }
 
